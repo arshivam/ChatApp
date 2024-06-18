@@ -26,9 +26,7 @@ export const sendMessage = async (req,res) =>{
         }
         await gotConversation.save();
 
-        return res.status(201).json({
-            message : "Message sent successfully"
-        })
+        return res.status(201).json({newMessage})
 
     } catch (error) {
         console.log(error);
@@ -42,7 +40,7 @@ export const getMessage = async (req, res) =>{
         const conversation = await Conversation.findOne({
            participants: {$all : [senderId, receiverId]}
         }).populate("messages")
-        return res.status(201).json(conversation?.messages)
+        return res.status(200).json(conversation?.messages)
     } catch (error) {
         console.log(error);
     }
