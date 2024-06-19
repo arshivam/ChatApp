@@ -4,14 +4,19 @@ import { setSelectedUser } from '../redux/userSlice';
 
 function OtherUser({user}) {
   const dispatch = useDispatch()
-  const {selectedUser} = useSelector(store=>store.user)
+  const {selectedUser, onlineUsers} = useSelector(store=>store.user)
   const selectedUserHandler = (user) =>{
     dispatch(setSelectedUser(user))
   }
+
+  const isOnline = onlineUsers?.includes(user?._id)
+  
+
+
   return (
     <>
       <div onClick={()=>selectedUserHandler(user)} className={`${selectedUser?._id == user._id ? 'bg-zinc-200 text-black': ''} flex items-center gap-2 rounded-md cursor-pointer p-2 hover:text-black hover:bg-zinc-200 `}>
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img
               src={user?.profilePhoto}
